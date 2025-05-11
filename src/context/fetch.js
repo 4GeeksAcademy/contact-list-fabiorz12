@@ -1,0 +1,30 @@
+const API_URL = "https://playground.4geeks.com/contact";
+
+export const getContacts = async () => {
+    const res = await fetch(`${API_URL}/agendas/search/contacts`);
+    return await res.json();
+};
+
+export const addContact = async (contact) => {
+    const res = await fetch(`${API_URL}/agendas/add/contacts`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(contact)
+    });
+    return await res.json();
+};
+
+export const deleteContact = async (id) => {
+  await fetch(`${API_URL}/agendas/delete/contacts/${id}`, {
+    method: "DELETE"
+  });
+};
+
+export const updateContact = async (contact) => {
+  const res = await fetch(`${API_URL}/agendas/profile/${contact.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(contact)
+  });
+  return await res.json();
+};
