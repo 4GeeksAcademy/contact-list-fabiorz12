@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useReducer, useContext } from "react";
 import { contactReducer, initialState } from "./store";
 
 export const ContactContext = createContext();
@@ -12,3 +12,5 @@ export const ContactProvider = ({ children }) => {
         </ContactContext.Provider>
     );
 };
+
+export const useContacts = () => useContext(ContactContext);

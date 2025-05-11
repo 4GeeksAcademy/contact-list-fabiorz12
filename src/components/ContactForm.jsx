@@ -22,6 +22,7 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form submitted:", form);
     if (id) {
       const updated = await updateContact(form);
       dispatch({ type: "UPDATE_CONTACT", payload: updated });
@@ -37,6 +38,7 @@ const ContactForm = () => {
       <input name="full_name" value={form.full_name} onChange={handleChange} placeholder="Nombre" />
       <input name="email" value={form.email} onChange={handleChange} placeholder="Correo" />
       <input name="phone" value={form.phone} onChange={handleChange} placeholder="Teléfono" />
+      <input name="adress" value={form.adress} onChange={handleChange} placeholder="Direccion" />
       <button type="submit">Guardar</button>
     </form>
   );
