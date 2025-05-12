@@ -7,7 +7,7 @@ const ContactForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { state, dispatch } = useContacts();
-  const [form, setForm] = useState({ full_name: "", email: "", phone: "" });
+  const [form, setForm] = useState({ name: "", email: "", phone: "", adress: "" });
 
   useEffect(() => {
     if (id) {
@@ -22,20 +22,24 @@ const ContactForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", form);
-    if (id) {
-      const updated = await updateContact(form);
-      dispatch({ type: "UPDATE_CONTACT", payload: updated });
-    } else {
-      const created = await addContact(form);
-      dispatch({ type: "ADD_CONTACT", payload: created });
-    }
-    navigate("/");
-  };
+    try {
+      console.log("Form submitted:", form);
+      if (id) {
+        const updated = await updateContact(form);
+        dispatch({ type: "UPDATE_CONTACT", payload: updated });
+      } else {
+        const created = await addContact(form);
+        dispatch({ type: "ADD_CONTACT", payload: created });
+      }
+      navigate("/");
+    } catch (error) {
+      console.error("Error al guardar el contacto:", error);
+    };
+  }
 
   return (
     <form onSubmit={handleSubmit}>
-      <input name="full_name" value={form.full_name} onChange={handleChange} placeholder="Nombre" />
+      <input name="full_name" value={form.name} onChange={handleChange} placeholder="Nombre" />
       <input name="email" value={form.email} onChange={handleChange} placeholder="Correo" />
       <input name="phone" value={form.phone} onChange={handleChange} placeholder="Teléfono" />
       <input name="adress" value={form.adress} onChange={handleChange} placeholder="Direccion" />
