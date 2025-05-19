@@ -1,6 +1,8 @@
 import ContactForm from "../components/ContactForm";
 
 
-export default function EditContact() {
+function EditContact() {
   return <ContactForm />;
 }
+
+export default EditContact;

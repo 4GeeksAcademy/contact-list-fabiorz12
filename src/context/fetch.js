@@ -9,24 +9,34 @@ export const addContact = async (contact) => {
     const res = await fetch(`${API_URL}/agendas/grimorio/contacts`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...contact, mi_agenda: "mi_agenda" })
+        body: JSON.stringify({ ...contact, agenda_slug: "grimorio" }) 
     });
     if (!res.ok) {
-        throw new Error("Error al agregar el contacto");
+        const errorData = await res.json(); 
+        throw new Error(`Error adding contact: ${res.status} - ${JSON.stringify(errorData)}`);
     }
+    return await res.json();
 };
 
 export const deleteContact = async (id) => {
-  await fetch(`${API_URL}/agendas/grimorio/contacts/${id}`, {
-    method: "DELETE"
-  });
+    const res = await fetch(`${API_URL}/agenda/grimorio/contact/${id}`, { 
+        method: "DELETE"
+    });
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(`Error deleting contact: ${res.status} - ${JSON.stringify(errorData)}`);
+    }
 };
 
 export const updateContact = async (contact) => {
-  const res = await fetch(`${API_URL}/agendas/grimorio/${contact.id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(contact)
-  });
-  return await res.json();
+      const res = await fetch(`${API_URL}/agenda/grimorio/contact/${contact.id}`, { 
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(contact)
+    });
+    if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(`Error updating contact: ${res.status} - ${JSON.stringify(errorData)}`);
+    }
+    return await res.json();
 };
