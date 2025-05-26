@@ -6,19 +6,19 @@ import { addContact, getContacts, updateContact, } from "../context/fetch";
 const ContactForm = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { state, dispatch } = useContacts();
+  const { store, dispatch } = useContacts();
   const [form, setForm] = useState({ name: "", email: "", phone: "", address: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     if (id) {
-      const existing = state.contacts.find(c => c.id === parseInt(id));
+      const existing = store.contacts.find(c => c.id === parseInt(id));
       if (existing) {
         setForm(existing);
       }
     }
-  }, [id, state.contacts]);
+  }, [id, store.contacts]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

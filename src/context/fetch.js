@@ -1,4 +1,37 @@
+import { useEffect } from "react";
+
 const API_URL = "https://playground.4geeks.com/contact";
+const USERNAME = "grimorio";
+
+ export const useCreateAgenda = () => {
+  useEffect(() => {
+    const lastChecked = localStorage.getItem("lastAgendaCheck");
+    const now = new Date();
+
+    // Si no hay registro anterior o pasaron más de 24 horas:
+    if (!lastChecked || now - new Date(lastChecked) > 24 * 60 * 60 * 1000) {
+      // Verificar si la agenda ya existe
+      fetch(`${API_URL}/agenda/${USERNAME}`)
+        .then((res) => {
+          if (res.status === 404) {
+            // Si no existe, la creamos
+            return fetch(`${API_URL}/agenda`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ agenda_slug: USERNAME }),
+            });
+          }
+        })
+        .then(() => {
+          // Guardamos la fecha del último chequeo
+          localStorage.setItem("lastAgendaCheck", now.toISOString());
+        })
+        .catch((err) => {
+          console.error("Error creando/verificando la agenda:", err);
+        });
+    }
+  }, []);
+};
 
 export const getContacts = async () => {
     const res = await fetch(`${API_URL}/agendas/grimorio/contacts`);

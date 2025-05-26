@@ -4,10 +4,10 @@ import { contactReducer, initialState } from "./store";
 export const ContactContext = createContext();
 
 export const ContactProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(contactReducer, initialState);
+    const [store, dispatch] = useReducer(contactReducer, initialState);
 
     return (
-        <ContactContext.Provider value={{ state, dispatch }}>
+        <ContactContext.Provider value={{ store, dispatch }}>
             {children}
         </ContactContext.Provider>
     );

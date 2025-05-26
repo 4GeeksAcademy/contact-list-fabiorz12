@@ -4,8 +4,9 @@ import { getContacts, deleteContact } from "../context/fetch";
 import { Link } from "react-router-dom";
 
 const ContactList = () => {
-  const { state, dispatch } = useContacts();
-
+  const { store, dispatch } = useContacts();
+  const contacts = Array.isArray(store.contacts) ? store.contacts : [];
+  console.log("Contacts:", contacts);
   useEffect(() => {
     const loadContacts = async () => {
       try {
@@ -32,21 +33,22 @@ const ContactList = () => {
       <h1 className="text-center">Agenda de Contactos</h1>
       <Link to="/add">Agregar Contacto</Link>
       <ul>
-        {Array.isArray(state.contacts) && state.contacts.length > 0 ? (
-          state.contacts.map(contact => (
-            console.log("contact", contact),
+
+        {contacts.length> 0 ? (
+          contacts.map(contact => (
             <li key={contact.id}>
-              {(contact.name || contact.full_name || "Sin nombre")} -
-              {(contact.email || "Sin email")} -
-              {(contact.phone || "Sin teléfono")} -
-              {(contact.address || contact.adress || "Sin dirección")}
-              {/* {contact.name} - {contact.email} - {contact.phone} - {contact.address} */}
-              <button onClick={() => handleDelete(contact.id)}>Eliminar</button>
+              <h3>{contact.name}</h3>
+              <p>{contact.email}</p>
+              <p>{contact.phone}</p>
+              <p>{contact.address}</p>
               <Link to={`/edit/${contact.id}`}>Editar</Link>
+              <button onClick={() => handleDelete(contact.id)}>Eliminar</button>
             </li>
           ))
         ) : (
-          <li>No hay contactos disponibles</li>
+          <h3 className="mt-5">
+            No hay contactos agregados, dale click al boton de agregar contactos para ingresar tu primer contacto.
+          </h3>
         )}
       </ul>
     </div>
@@ -54,3 +56,18 @@ const ContactList = () => {
 };
 
 export default ContactList;
+
+
+// const { store, dispatch } = useGlobalReducer()
+
+//     const contacts = store.contacts
+//     const slug = store.slug
+// {
+//                     contacts.length > 0 ?
+
+//                         contacts.map((contact) => {
+//                             return (
+//                                 <Contact key={contact.id} contact={contact || ''} />
+//                             )
+//                         }) : <h3 className="mt-5">No hay contactos agregados en la {slug}, dale click al boton de agregar contactos para ingresar tu primer contacto.</h3>
+//                 }
