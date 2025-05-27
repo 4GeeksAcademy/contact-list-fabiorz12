@@ -1,13 +1,6 @@
-import { useContext, } from "react";
-import { ContactContext } from "./ContactContext";
 const API_URL = "https://playground.4geeks.com/contact";
 
 
-export const getContacts = async () => {
-  const {state,dispatch} = useContext(ContactContext);
-    const res = await fetch(`${API_URL}/agendas/grimorio/contacts`);
-    return await res.json();
-};
 
 export const addContact = async (contact) => {
     const res = await fetch(`${API_URL}/agendas/grimorio/contacts`, {
@@ -23,7 +16,7 @@ export const addContact = async (contact) => {
 };
 
 export const deleteContact = async (id) => {
-    const res = await fetch(`${API_URL}/agenda/grimorio/contact/${id}`, { 
+    const res = await fetch(`https://playground.4geeks.com/contact/agendas/grimorio/contacts/${id}`, { 
         method: "DELETE"
     });
     if (!res.ok) {
@@ -33,7 +26,7 @@ export const deleteContact = async (id) => {
 };
 
 export const updateContact = async (contact) => {
-      const res = await fetch(`${API_URL}/agenda/grimorio/contact/${contact.id}`, { 
+      const res = await fetch(`https://playground.4geeks.com/contact/agendas/grimorio/contacts/${contact.id}`, { 
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(contact)

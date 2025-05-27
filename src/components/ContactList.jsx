@@ -1,25 +1,21 @@
 import { useEffect } from "react";
 import { useContacts } from "../context/ContactContext";
-import { getContacts, deleteContact, } from "../context/fetch";
+import { deleteContact, } from "../context/fetch";
 import { Link } from "react-router-dom";
 
 const ContactList = () => {
   const { store, dispatch } = useContacts();
   const contacts = Array.isArray(store.contacts) ? store.contacts : [];
-  console.log("Contacts:", contacts);
-  useEffect(() => {
-    const loadContacts = async () => {
-      try {
-        const data = await getContacts();
-        dispatch({ type: "SET_CONTACTS", payload: data });
-      } catch (error) {
-        console.error("Error fetching contacts:", error);
-      }
-    };
-    loadContacts();
-  }, [dispatch]);
-
   
+  useEffect(() => {
+    fetch ('https://playground.4geeks.com/contact/agendas/grimorio/contacts',
+
+      {method: "GET", headers: {"Content-Type": "application/json"}}
+    )
+      .then((response) => response.json())
+      .then(data =>{
+        dispatch({ type: "SET_CONTACTS", payload: data.contacts });
+      })},[])
   const handleDelete = async (id) => {
     try {
       await deleteContact(id);
