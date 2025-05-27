@@ -3,11 +3,11 @@ import { useEffect } from "react";
 const API_URL = "https://playground.4geeks.com/contact";
 const USERNAME = "grimorio";
 
- export const useCreateAgenda = () => {
+export const useCreateAgenda = async() => {
   useEffect(() => {
     const lastChecked = localStorage.getItem("lastAgendaCheck");
     const now = new Date();
-
+    // No necesitas hacer nada aquí, el useEffect se ejecuta automáticamente cuando el hook se usa en un componente.
     // Si no hay registro anterior o pasaron más de 24 horas:
     if (!lastChecked || now - new Date(lastChecked) > 24 * 60 * 60 * 1000) {
       // Verificar si la agenda ya existe

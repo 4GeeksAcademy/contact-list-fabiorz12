@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContacts } from "../context/ContactContext";
-import { addContact, getContacts, updateContact, } from "../context/fetch";
+import { addContact, updateContact, } from "../context/fetch";
 
 const ContactForm = () => {
   const navigate = useNavigate();

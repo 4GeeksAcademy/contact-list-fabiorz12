@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useContacts } from "../context/ContactContext";
-import { getContacts, deleteContact } from "../context/fetch";
+import { getContacts, deleteContact, useCreateAgenda  } from "../context/fetch";
 import { Link } from "react-router-dom";
 
 const ContactList = () => {
@@ -19,6 +19,18 @@ const ContactList = () => {
     loadContacts();
   }, [dispatch]);
 
+  const createAgenda = async () => {
+    try {
+      await useCreateAgenda();
+      console.log("Agenda created successfully");
+    } catch (error) {
+      console.error("Error creating agenda:", error);
+    }
+  }
+  
+
+
+
   const handleDelete = async (id) => {
     try {
       await deleteContact(id);
@@ -33,7 +45,6 @@ const ContactList = () => {
       <h1 className="text-center">Agenda de Contactos</h1>
       <Link to="/add">Agregar Contacto</Link>
       <ul>
-
         {contacts.length> 0 ? (
           contacts.map(contact => (
             <li key={contact.id}>
